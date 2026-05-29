@@ -1,0 +1,6 @@
+{
+  "name": "Raju Landscape",
+  "description": "A clean, modern plant catalog and WhatsApp-integrated ordering portal for Raju Landscape Nursery in Madhapur, Hyderabad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
