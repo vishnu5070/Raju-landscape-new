@@ -181,7 +181,7 @@ export default function App() {
         />
 
         {/* Plant Cards Listing Grid */}
-        <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <section id="catalog-section" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           
           {/* Main List Rendering */}
           {filteredPlants.length > 0 ? (
