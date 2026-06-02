@@ -22,24 +22,9 @@ A React + Vite nursery catalog web app for Raju Landscape in Madhapur, Hyderabad
 - lucide-react icons
 - motion/react animations
 
-## Routes
 
-- `/` - Main customer catalog page
-- `/admin-login` - Admin login page/modal route
-- `/admin-portal` - Protected admin catalog management portal
 
-If a user opens `/admin-portal` without logging in, the app redirects to `/admin-login`.
 
-## Admin Login
-
-Demo credentials:
-
-```txt
-Username: admin
-Password: admin
-```
-
-The app also accepts `admin123` and `landscape2026` as alternate demo passwords.
 
 ## WhatsApp Order Flow
 
