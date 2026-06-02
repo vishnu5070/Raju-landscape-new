@@ -350,19 +350,7 @@ export default function AdminPanel({
                   />
                 </div>
 
-                {/* Field Scientific Name */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-forest-700 uppercase tracking-widest font-mono">
-                    Scientific Name (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    value={scientificName}
-                    onChange={(e) => setScientificName(e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-hidden focus:border-forest-500 focus:bg-white"
-                    placeholder="e.g. Adiantum tenerum"
-                  />
-                </div>
+                
 
                 {/* Category Selection */}
                 <div className="space-y-1">
@@ -397,47 +385,6 @@ export default function AdminPanel({
                   />
                 </div>
 
-                {/* Watering care specs */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-forest-700 uppercase tracking-widest font-mono">
-                    Water Care Specs
-                  </label>
-                  <input
-                    type="text"
-                    value={water}
-                    onChange={(e) => setWater(e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-hidden focus:border-forest-500 focus:bg-white"
-                    placeholder="e.g. Medium (Water top soil 2-3 times/week)"
-                  />
-                </div>
-
-                {/* Sunlight Specs */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-forest-700 uppercase tracking-widest font-mono">
-                    Sunlight Requirement Specs
-                  </label>
-                  <input
-                    type="text"
-                    value={sunlight}
-                    onChange={(e) => setSunlight(e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-hidden focus:border-forest-500 focus:bg-white"
-                    placeholder="e.g. Filtered Indirect Sunlight"
-                  />
-                </div>
-
-                {/* Pot size specs */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-forest-700 uppercase tracking-widest font-mono">
-                    Pot / Grow bag Size Details
-                  </label>
-                  <input
-                    type="text"
-                    value={size}
-                    onChange={(e) => setSize(e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-hidden focus:border-forest-500 focus:bg-white"
-                    placeholder="e.g. 8 inch eco grow bag"
-                  />
-                </div>
 
                 {/* Toggle Featured */}
                 <div className="flex items-center gap-2 pt-5 select-none">

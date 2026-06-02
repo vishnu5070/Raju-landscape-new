@@ -309,6 +309,12 @@ export default function App() {
         }}
         onAddToCart={handleAddToCart}
         isInCart={selectedPlant ? !!cart.find(item => item.plant.id === selectedPlant.id) : false}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        categories={categories}
+        totalPlantsCount={filteredPlants.length}
       />
 
       {/* Admin Security Authentication Gateway Modal */}

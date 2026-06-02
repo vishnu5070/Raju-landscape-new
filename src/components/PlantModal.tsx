@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Sun, Droplets, Box, Heart, CircleAlert } from 'lucide-react';
+import { X, Sparkles, Sun, Droplets, Box, CircleAlert, Search } from 'lucide-react';
 import { Plant } from '../types';
 
 interface PlantModalProps {
@@ -9,6 +9,12 @@ interface PlantModalProps {
   onClose: () => void;
   onAddToCart: (plant: Plant) => void;
   isInCart: boolean;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  categories: string[];
+  totalPlantsCount: number;
 }
 
 export default function PlantModal({
@@ -16,7 +22,13 @@ export default function PlantModal({
   isOpen,
   onClose,
   onAddToCart,
-  isInCart
+  isInCart,
+  searchQuery,
+  setSearchQuery,
+  selectedCategory,
+  setSelectedCategory,
+  categories,
+  totalPlantsCount
 }: PlantModalProps) {
   
   // Disable background scrolling when modal is open
@@ -53,7 +65,7 @@ export default function PlantModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="relative w-full max-w-3xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 flex flex-col md:flex-row max-h-[90vh] md:max-h-auto"
+            className="relative w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]"
           >
             
             {/* Close Button Float */}
@@ -64,28 +76,75 @@ export default function PlantModal({
               <X className="w-5 h-5" />
             </button>
 
-            {/* Left Column: Image Area */}
-            <div className="relative w-full md:w-1/2 aspect-video md:aspect-auto md:min-h-[450px]">
-              <img
-                src={plant.image}
-                alt={plant.name}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/20" />
-              
-              {/* Category tag */}
-              <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900/90 text-white border border-forest-700/50 text-xs font-semibold">
-                {plant.category}
-              </span>
+            <div className="bg-white p-4 pr-14 md:p-5 md:pr-16 border-b border-gray-100 space-y-3">
+              {/* Native Search Input */}
+              <div className="relative w-full">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-forest-500 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search plants by name ... (e.g. Rose, Monstera)"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-11 pr-16 py-3 bg-[#faf8f5] border border-forest-100 hover:border-forest-200 focus:border-forest-500 focus:bg-white rounded-2xl text-sm font-medium outline-hidden transition shadow-3xs"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 hover:text-gray-600 px-1.5 py-0.5 rounded-md hover:bg-gray-100"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
+              {/* Category Selector Chips */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none scroll-smooth">
+                {categories.map((category) => {
+                  const isActive = selectedCategory === category;
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`whitespace-nowrap px-4 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all border shrink-0 cursor-pointer ${
+                        isActive
+                          ? 'bg-forest-600 hover:bg-forest-700 text-white border-forest-500 shadow-xs shadow-forest-100'
+                          : 'bg-white hover:bg-forest-50 text-forest-800 border-forest-100 hover:border-forest-200'
+                      }`}
+                    >
+                      {category}
+                      {isActive && (
+                        <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[9px] bg-white text-forest-700 font-bold font-mono">
+                          {totalPlantsCount}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Right Column: Information Details */}
-            <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto">
-              
-              <div className="mb-4">
-                <span className="text-[10px] tracking-widest text-earth-500 font-extrabold uppercase font-mono block mb-1">
-                  Nursery Catalog Item
+            <div className="flex flex-col md:flex-row overflow-y-auto">
+              {/* Left Column: Image Area */}
+              <div className="relative w-full md:w-1/2 aspect-video md:aspect-auto md:min-h-[450px] shrink-0">
+                <img
+                  src={plant.image}
+                  alt={plant.name}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/20" />
+                
+                {/* Category tag */}
+                <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900/90 text-white border border-forest-700/50 text-xs font-semibold">
+                  {plant.category}
+                </span>
+              </div>
+
+              {/* Right Column: Information Details */}
+              <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col">
+                <div className="mb-4">
+                  <span className="text-[10px] tracking-widest text-earth-500 font-extrabold uppercase font-mono block mb-1">
+                    Nursery Catalog Item
                 </span>
                 <h2 className="text-2xl font-black font-display text-forest-900 leading-tight">
                   {plant.name}
@@ -151,6 +210,7 @@ export default function PlantModal({
                 </button>
               </div>
 
+            </div>
             </div>
 
           </motion.div>
