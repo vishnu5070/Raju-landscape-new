@@ -6,7 +6,7 @@ import PlantModal from './components/PlantModal';
 import OrderWishlist from './components/OrderWishlist';
 import Footer from './components/Footer';
 import { PLANTS } from './data/plants';
-import { Plant, CartItem } from './types.ts';
+import { Plant, CartItem } from './types';
 import { Star, Leaf, Sparkles, MessageSquare, RefreshCcw, Search } from 'lucide-react';
 import { motion } from 'motion/react';
 import AboutSection from './components/AboutSection';

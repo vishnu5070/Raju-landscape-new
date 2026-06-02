@@ -28,7 +28,7 @@ export default function NurseryHero({
   };
 
   return (
-    <div
+    <div id="hero"
       className='relative flex min-h-[534px] w-full flex-col items-start justify-center overflow-hidden bg-white px-4 py-24 text-left text-7xl font-bold text-green-950 md:items-center md:text-center md:px-10 lg:px-20'
       style={{ aspectRatio: '800 / 534' }}
     >
