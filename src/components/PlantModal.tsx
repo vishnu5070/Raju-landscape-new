@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, Sun, Droplets, Box, CircleAlert, Search } from 'lucide-react';
-import { Plant } from '../types';
+import { Plant } from '../types.ts';
 
 interface PlantModalProps {
   plant: Plant | null;

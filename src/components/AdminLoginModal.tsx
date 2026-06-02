@@ -50,11 +50,11 @@ export default function AdminLoginModal({
         onLoginSuccess();
         setUsername('');
         setPassword('');
-        onClose();
-      } else {
-        setFormError('Invalid Administrator credentials. Please inspect the tips box below.');
-      }
-    }, 600);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setFormError(err.message || 'Invalid Administrator credentials. Please inspect the tips box below.');
+      });
   };
 
   if (!isOpen) return null;
@@ -168,16 +168,8 @@ export default function AdminLoginModal({
         {/* Demo Helper box displaying exact credentials to avoid any friction */}
         <div className="mt-6 p-4 rounded-xl bg-forest-50 border border-forest-100/60">
           <div className="flex gap-2 items-start text-xs text-forest-800">
-            <Lightbulb className="w-4 h-4 text-earth-500 shrink-0 mt-0.5" />
-            <div>
-              <strong className="text-forest-900 block mb-0.5">Quick Testing Credentials:</strong>
-              <div className="font-mono text-[11px] text-forest-700 bg-white/70 px-2 py-1 rounded border border-forest-100">
-                <p>Username: <strong className="text-forest-900">admin</strong></p>
-                <p>Password: <strong className="text-forest-900">admin</strong></p>
-              </div>
-              <p className="text-[10px] text-gray-500 mt-1.5 font-sans leading-tight">
-                Any valid base catalog administration changes you commit inside the portal will immediately persist to browser memory.
-              </p>
+            
+            <div> 
             </div>
           </div>
         </div>

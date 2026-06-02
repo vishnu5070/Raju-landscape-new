@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ShoppingBag, Trash2, Plus, Minus, Send, CheckCircle2, ShieldCheck, HelpCircle } from 'lucide-react';
-import { CartItem, OrderForm } from '../types';
+import { CartItem, OrderForm } from '../types.ts';
 import { NURSERY_INFO } from '../data/plants';
 
 interface OrderWishlistProps {
