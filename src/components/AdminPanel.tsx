@@ -108,8 +108,12 @@ export default function AdminPanel({
     if (!image) return setFormError('Please upload an image or provide a valid image input.');
     if (price <= 0) return setFormError('Please enter a valid price greater than zero.');
 
-    const plantPayload: Plant = {
-      id: editingPlant ? editingPlant.id : `custom_${Date.now()}`,
+    const url = editingPlant 
+      ? `http://localhost:5000/api/plants/${editingPlant.id}` 
+      : 'http://localhost:5000/api/plants';
+    const method = editingPlant ? 'PUT' : 'POST';
+
+    const plantPayload = {
       name: name.trim(),
       scientificName: scientificName.trim() || undefined,
       description: description.trim(),
@@ -122,12 +126,26 @@ export default function AdminPanel({
       isFeatured
     };
 
-    try {
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(plantPayload)
+    })
+    .then(async (res) => {
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Failed to save the plant to the catalog.');
+      }
+      return res.json();
+    })
+    .then((savedPlant: Plant) => {
       if (editingPlant) {
-        onUpdatePlant(plantPayload);
+        onUpdatePlant(savedPlant);
         setSuccessMsg('Plant updated successfully in the catalog!');
       } else {
-        onAddPlant(plantPayload);
+        onAddPlant(savedPlant);
         setSuccessMsg('New plant added successfully to the catalog!');
       }
 
@@ -135,16 +153,29 @@ export default function AdminPanel({
         setSuccessMsg('');
         setActiveTab('list');
       }, 1000);
-    } catch {
-      setFormError('Failed to save the plant to the catalog.');
-    }
+    })
+    .catch((err) => {
+      setFormError(err.message || 'Failed to save the plant.');
+    });
   };
 
   // Delete Handler with prompt confirmation
   const handleDeleteCheck = (plant: Plant) => {
     const isConfirmed = window.confirm(`Are you sure you want to permanently delete "${plant.name}" from your catalog?`);
     if (isConfirmed) {
-      onDeletePlant(plant.id);
+      fetch(`http://localhost:5000/api/plants/${plant.id}`, {
+        method: 'DELETE'
+      })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to delete the plant.');
+        }
+        onDeletePlant(plant.id);
+      })
+      .catch((err) => {
+        alert(err.message || 'Failed to delete the plant.');
+      });
     }
   };
 
