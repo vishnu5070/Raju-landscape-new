@@ -31,17 +31,26 @@ export default function AdminLoginModal({
 
     setLoading(true);
 
-    // Short artificial delay for smooth authenticting look
-    setTimeout(() => {
-      setLoading(false);
-      // Support common user-friendly credentials
-      const normalizedUser = username.trim().toLowerCase();
-      const isCorrect = (normalizedUser === 'admin' && (password === 'admin' || password === 'admin123' || password === 'landscape2026'));
-
-      if (isCorrect) {
+    fetch('http://localhost:5000/api/admin/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'Invalid credentials.');
+        }
+        return res.json();
+      })
+      .then(() => {
+        setLoading(false);
         onLoginSuccess();
         setUsername('');
         setPassword('');
+        onClose();
       } else {
         setFormError('Invalid Administrator credentials. Please inspect the tips box below.');
       }

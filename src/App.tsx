@@ -49,19 +49,29 @@ export default function App() {
     }
   }, [currentPath, isAdmin]);
 
-  // Prefill the catalog plants with standard listings or user customized catalog modifications from browser local storage
-  const [catalogPlants, setCatalogPlants] = useState<Plant[]>(() => {
-    try {
-      const saved = localStorage.getItem('raju_plants_catalog_v1');
-      return saved ? JSON.parse(saved) : PLANTS;
-    } catch {
-      return PLANTS;
-    }
-  });
+  // Load catalog plants dynamically from backend database
+  const [catalogPlants, setCatalogPlants] = useState<Plant[]>([]);
 
   useEffect(() => {
-    localStorage.setItem('raju_plants_catalog_v1', JSON.stringify(catalogPlants));
-  }, [catalogPlants]);
+    fetch('http://localhost:5000/api/plants')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch catalog plants.');
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.length > 0) {
+          setCatalogPlants(data);
+        } else {
+          // If the DB is empty, default to the local static PLANTS data list as initial seed
+          setCatalogPlants(PLANTS);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching plants from backend:', err);
+        // Fallback to static list if backend is not reachable or fails
+        setCatalogPlants(PLANTS);
+      });
+  }, []);
 
   const categories = ['All Plants', 'Flowering Plants', 'Decorative Plants', 'Indoor Plants', 'Vegetable Plants'];
 
