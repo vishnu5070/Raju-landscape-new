@@ -7,13 +7,14 @@ import OrderWishlist from './components/OrderWishlist';
 import Footer from './components/Footer';
 import { PLANTS, TESTIMONIALS } from './data/plants';
 import { Plant, CartItem } from './types';
-import { Star, Leaf, Sparkles, MessageSquare, RefreshCcw } from 'lucide-react';
+import { Star, Leaf, Sparkles, MessageSquare, RefreshCcw, Search } from 'lucide-react';
 import { motion } from 'motion/react';
 import AboutSection from './components/AboutSection';
 import AdminLoginModal from './components/AdminLoginModal';
 import AdminPanel from './components/AdminPanel';
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState<string>(() => window.location.pathname);
   
   // Categorization & State
   const [selectedCategory, setSelectedCategory] = useState<string>('All Plants');
@@ -29,8 +30,24 @@ export default function App() {
       return false;
     }
   });
-  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState<boolean>(false);
-  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState<boolean>(false);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    if (currentPath === '/admin-portal' && !isAdmin) {
+      navigateTo('/admin-login');
+    }
+  }, [currentPath, isAdmin]);
 
   // Prefill the catalog plants with standard listings or user customized catalog modifications from browser local storage
   const [catalogPlants, setCatalogPlants] = useState<Plant[]>(() => {
@@ -129,23 +146,19 @@ export default function App() {
   };
 
   const handleAdminClick = () => {
-    if (isAdmin) {
-      setIsAdminPanelOpen(true);
-    } else {
-      setIsAdminLoginOpen(true);
-    }
+    navigateTo(isAdmin ? '/admin-portal' : '/admin-login');
   };
 
   const handleLoginSuccess = () => {
     setIsAdmin(true);
     sessionStorage.setItem('raju_admin_auth_v1', 'true');
-    setIsAdminPanelOpen(true);
+    navigateTo('/admin-portal');
   };
 
   const handleLogout = () => {
     setIsAdmin(false);
     sessionStorage.removeItem('raju_admin_auth_v1');
-    setIsAdminPanelOpen(false);
+    navigateTo('/admin-login');
   };
 
   // Smooth scroll helper
@@ -182,6 +195,52 @@ export default function App() {
 
         {/* Plant Cards Listing Grid */}
         <section id="catalog-section" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            {/* Native Search Input */}
+            <div className="relative w-full md:max-w-md">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-forest-500 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search plants by name ... (e.g. Rose, Monstera)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-16 py-3 bg-[#faf8f5] border border-forest-100 hover:border-forest-200 focus:border-forest-500 focus:bg-white rounded-2xl text-sm font-medium outline-hidden transition shadow-3xs"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 hover:text-gray-600 px-1.5 py-0.5 rounded-md hover:bg-gray-100"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            {/* Category Selector Chips */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none scroll-smooth">
+              {categories.map((category) => {
+                const isActive = selectedCategory === category;
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`whitespace-nowrap px-4 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all border shrink-0 cursor-pointer ${
+                      isActive
+                        ? 'bg-forest-600 hover:bg-forest-700 text-white border-forest-500 shadow-xs shadow-forest-100'
+                        : 'bg-white hover:bg-forest-50 text-forest-800 border-forest-100 hover:border-forest-200'
+                    }`}
+                  >
+                    {category}
+                    {isActive && (
+                      <span className="ml-1.5 px-1.5 py-0.2 rounded-full text-[9px] bg-white text-forest-700 font-bold font-mono">
+                        {filteredPlants.length}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           
           {/* Main List Rendering */}
           {filteredPlants.length > 0 ? (
@@ -230,59 +289,7 @@ export default function App() {
         {/* Clean, Dedicated About Raju Landscape Section (displays 5 specific criteria) */}
         <AboutSection />
 
-        {/* Client Testimonials Section */}
-        <section id="testimonials" className="bg-[#e2ede7]/40 py-16 border-t border-b border-forest-100/40">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-100/50 border border-forest-200/50 text-xs font-semibold text-forest-700 font-mono mb-2">
-                <MessageSquare className="w-3.5 h-3.5" />
-                Trusted in Hyderabad
-              </span>
-              <h2 className="text-3xl font-extrabold font-display text-forest-900 tracking-tight">Stories from Our Gardeners</h2>
-              <p className="mt-2 text-sm text-gray-500">
-                See why homeowners and balcony garden hobbyists in Gachibowli, Jubilee Hills, and Madhapur count on Raju Landscape.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="bg-white rounded-2xl p-6 border border-gray-100/80 shadow-xs flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Stars bar */}
-                    <div className="flex gap-0.5 text-amber-500 mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-500" />
-                      ))}
-                    </div>
-
-                    <p className="text-sm text-gray-600 italic leading-relaxed mb-6">
-                      "{testimonial.comment}"
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 pt-4 border-t border-gray-50">
-                    <div className="w-9 h-9 rounded-full bg-forest-50 border border-forest-100 text-forest-600 font-display font-black text-sm flex items-center justify-center">
-                      {testimonial.name[0]}
-                    </div>
-                    <div>
-                      <h4 className="font-display font-bold text-sm text-forest-900 leading-none">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-[10px] text-gray-400 font-mono mt-0.5 leading-none">
-                        {testimonial.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-        </section>
+       
 
         {/* Dynamic Wishlist Order Management Page */}
         <section className="bg-white border-b border-gray-50">
@@ -319,15 +326,15 @@ export default function App() {
 
       {/* Admin Security Authentication Gateway Modal */}
       <AdminLoginModal
-        isOpen={isAdminLoginOpen}
-        onClose={() => setIsAdminLoginOpen(false)}
+        isOpen={currentPath === '/admin-login'}
+        onClose={() => navigateTo('/')}
         onLoginSuccess={handleLoginSuccess}
       />
 
       {/* Admin Inventory & Catalog Management Panel */}
       <AdminPanel
-        isOpen={isAdminPanelOpen}
-        onClose={() => setIsAdminPanelOpen(false)}
+        isOpen={currentPath === '/admin-portal' && isAdmin}
+        onClose={() => navigateTo('/')}
         plants={catalogPlants}
         onAddPlant={handleAddPlant}
         onUpdatePlant={handleUpdatePlant}

@@ -48,6 +48,10 @@ export default function OrderWishlist({
   const handleOrderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (cart.length === 0) {
+      return;
+    }
+
     // Field Valdations
     const newErrors: typeof errors = {};
     if (!formData.name.trim()) newErrors.name = 'Please provide your full name.';
@@ -71,16 +75,18 @@ export default function OrderWishlist({
     // Prepare WhatsApp Message according to instructions format
     const plantsListText = cart.map((item, index) => {
       // Clean plant name a little if needed
-      return `${index + 1}. ${item.plant.name} × ${item.quantity}`;
+      return `${index + 1}. ${item.plant.name} x ${item.quantity}`;
     }).join('\n');
 
-    const messageText = `🌿 Raju Landscape Order Request 🌿
+    const messageText = `Raju Landscape Order Request
 
 Customer Name: ${formData.name.trim()}
 Phone Number: ${formData.phone.trim()}
 
 Selected Plants:
 ${plantsListText}
+
+Estimated Plant Sum: Rs. ${subtotal}
 
 Delivery Address:
 ${formData.address.trim()}
@@ -89,23 +95,19 @@ Please confirm availability and delivery details.
 Thank You.`;
 
     setIsSubmitting(true);
+    setOrderPlacedSuccess(true);
 
-    // Simulate small smooth buffer before opening WhatsApp
+    const encodedMessage = encodeURIComponent(messageText);
+    const whatsappUrl = `https://wa.me/${NURSERY_INFO.whatsAppNumber}?text=${encodedMessage}`;
+
+    // Open directly from the submit click so browsers are less likely to block it.
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    setIsSubmitting(false);
+
+    // Clear cart success state reset after a while
     setTimeout(() => {
-      setIsSubmitting(false);
-      setOrderPlacedSuccess(true);
-      
-      const encodedMessage = encodeURIComponent(messageText);
-      const whatsappUrl = `https://wa.me/${NURSERY_INFO.whatsAppNumber}?text=${encodedMessage}`;
-      
-      // Open WhatsApp URL safely
-      window.open(whatsappUrl, '_blank', 'referrer');
-      
-      // Clear cart success state reset after a while
-      setTimeout(() => {
-        setOrderPlacedSuccess(false);
-      }, 8000);
-    }, 900);
+      setOrderPlacedSuccess(false);
+    }, 8000);
   };
 
   return (
@@ -164,7 +166,7 @@ Thank You.`;
                   href="#catalog-section"
                   className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-forest-600 hover:bg-forest-700 text-white font-semibold text-xs transition"
                 >
-                  Browse Plant Catalog 🌱
+                  Browse Plant Catalog 
                 </a>
               </div>
 

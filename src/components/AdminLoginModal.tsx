@@ -42,7 +42,6 @@ export default function AdminLoginModal({
         onLoginSuccess();
         setUsername('');
         setPassword('');
-        onClose();
       } else {
         setFormError('Invalid Administrator credentials. Please inspect the tips box below.');
       }

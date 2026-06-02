@@ -204,31 +204,6 @@ export const PLANTS: Plant[] = [
     isFeatured: false,
   }
 ];
-
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    id: 't1',
-    name: 'Vikram Reddy',
-    role: 'Homeowner, Jubilee Hills',
-    comment: 'Absolutely love their indoor plants! The ZZ plant and Snake plant I bought from Raju Landscape have transformed my bedroom. Beautifully potted and in peak health. WhatsApp coordinate was so swift!',
-    rating: 5
-  },
-  {
-    id: 't2',
-    name: 'Ananya Sharma',
-    role: 'Balcony Gardner, Madhapur',
-    comment: 'The tomato and curry leaf plants are growing exceptionally well! Raju personally gave me tips on organic fertilizers. It is so convenient to add items on this catalog and order everything on WhatsApp in seconds.',
-    rating: 5
-  },
-  {
-    id: 't3',
-    name: 'Captain K. Rao',
-    role: 'Landscape Consultant',
-    comment: 'Best quality palms and landscaping shrubs in Hyderabad. Have sourced multiple Areca Palms and Crotons for my villa projects from Raju Landscape. Highly professional plant material!',
-    rating: 5
-  }
-];
-
 export const NURSERY_INFO = {
   name: 'Raju Landscape & Nursery',
   headline: 'Delivering Nature & Serenity to Your Doorstep',

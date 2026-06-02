@@ -6,7 +6,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="footer" className="bg-forest-900 text-forest-100 pt-16 pb-8 border-t border-forest-800">
+    <footer id="footer" className="bg-forest-900 text-white pt-16 pb-8 border-t border-forest-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Main Columns Grid */}
