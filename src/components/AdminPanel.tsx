@@ -108,9 +108,10 @@ export default function AdminPanel({
     if (!image) return setFormError('Please upload an image or provide a valid image input.');
     if (price <= 0) return setFormError('Please enter a valid price greater than zero.');
 
-    const url = editingPlant 
-      ? `http://localhost:5000/api/plants/${editingPlant.id}` 
-      : 'http://localhost:5000/api/plants';
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const url = isEditing
+      ? `${API_URL}/api/plants/${editingPlant.id}`
+      : `${API_URL}/api/plants`;
     const method = editingPlant ? 'PUT' : 'POST';
 
     const plantPayload = {
