@@ -164,7 +164,8 @@ export default function AdminPanel({
   const handleDeleteCheck = (plant: Plant) => {
     const isConfirmed = window.confirm(`Are you sure you want to permanently delete "${plant.name}" from your catalog?`);
     if (isConfirmed) {
-      fetch(`http://localhost:5000/api/plants/${plant.id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      fetch(`${API_URL}/api/plants/${plant.id}`, {
         method: 'DELETE'
       })
       .then(async (res) => {
