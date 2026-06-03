@@ -162,6 +162,9 @@ export default function PlantModal({
                 <span className="text-3xl font-black text-forest-900 font-display">₹{plant.price}</span>
                 <span className="text-xs text-gray-500">/ per nursery pot</span>
               </div>
+              
+              
+
 
               {/* Description Body */}
               <div className="text-sm text-gray-600 leading-relaxed space-y-4 mb-6">

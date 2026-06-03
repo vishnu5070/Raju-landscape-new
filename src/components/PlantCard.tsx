@@ -26,6 +26,10 @@ export default function PlantCard({
   // Custom color category pills
   const getCategoryTheme = (category: string) => {
     switch (category) {
+      case 'fruit category':
+        return { bg: 'bg-yellow-50 border-yellow-100 text-yellow-700', bullet: 'bg-yellow-500' };
+      case 'Decorative Flowers':
+        return { bg: 'bg-pink-50 border-pink-100 text-pink-700', bullet: 'bg-pink-500' };
       case 'Flowering Plants':
         return { bg: 'bg-rose-50 border-rose-100 text-rose-700', bullet: 'bg-rose-500' };
       case 'Indoor Plants':

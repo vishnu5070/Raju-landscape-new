@@ -37,7 +37,7 @@ export default function AboutSection() {
             </div>
             
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed italic">
-              "Established with a passion for greenery, Raju Landscape is Hyderabad's premium plant nursery in Madhapur. We specialize in bringing handpicked ornamental, flowering, indoor, and kitchen garden plants to homes and offices."
+              20+ years experience in transforming spaces with lush greenery. We specialize in indoor and outdoor plants, landscaping, and garden design. Our passion is to bring nature's beauty to your doorstep, creating serene and vibrant environments for homes and businesses alike and 50+ plant varieties to choose from. Visit us for expert advice and quality plants that thrive in any setting. Your green oasis awaits at Raju Landscape! 
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function AboutSection() {
                 <span>Nursery Location</span>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Plot No. 42, Hitech City Main Rd, near Madhapur Metro Station, Madhapur, Hyderabad, Telangana 500081
+                Jadcherla, Hyderabad, Telangana 500081
               </p>
             </div>
 
@@ -62,7 +62,7 @@ export default function AboutSection() {
                 <span>Contact Number</span>
               </div>
               <p className="text-xs text-gray-600 font-bold font-mono">
-                +91 98480 22338
+                +91 6301737215
               </p>
               <span className="text-[10px] text-gray-400">Available from 8:00 AM - 8:30 PM today</span>
             </div>

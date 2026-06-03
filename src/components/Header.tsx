@@ -42,7 +42,7 @@ export default function Header({ cartItemCount, onCartClick, isAdmin = false, on
               </span>
               <span className="flex items-center gap-0.5 text-[10px] text-forest-600 font-mono">
                 <MapPin className="w-3 h-3 text-earth-500" />
-                Madhapur, Hyderabad
+                Jadcherla, Hyderabad
               </span>
             </div>
           </div>
@@ -59,17 +59,9 @@ export default function Header({ cartItemCount, onCartClick, isAdmin = false, on
           <div className="flex items-center gap-2">
             {/* Checkout/Order list Button */}
             <button
-              onClick={onCartClick} className='bg-forest-500 hover:bg-forest-600 text-white px-3 py-1 rounded-md relative transition-colors flex items-center gap-1 text-sm font-medium'>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="text-white"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
-              >
-                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0z" />
+              onClick={onCartClick} className='bg-forest-500 hover:bg-forest-600 text-white px-4 py-2 rounded-md relative transition-colors flex items-center gap-2 text-sm font-medium mt-0.5 '>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart4" viewBox="0 0 16 16">
+              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
               </svg>
               <span>My Basket</span>
 

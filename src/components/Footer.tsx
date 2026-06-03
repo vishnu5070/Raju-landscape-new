@@ -99,12 +99,9 @@ export default function Footer() {
 
         {/* Footer Bottom copyright and attribution */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-forest-400">
-          <p>© {currentYear} Raju Landscape & Nursery. Hyderabad, Telangana.</p>
-          <div className="flex gap-4 font-mono text-[10px]">
-            <span>Designed in Hitech City</span>
-            <span>•</span>
-            <span>WhatsApp Verified Portal</span>
-          </div>
+          <p className="text-center sm:text-left">
+            © 2026 Raju Landscape & Nursery. Hyderabad, Telangana.
+          </p>
         </div>
 
       </div>

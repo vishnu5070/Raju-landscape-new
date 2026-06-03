@@ -30,7 +30,7 @@ export default function AdminPanel({
   const [name, setName] = useState('');
   const [scientificName, setScientificName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<'Flowering Plants' | 'Decorative Plants' | 'Indoor Plants' | 'Vegetable Plants'>('Flowering Plants');
+  const [category, setCategory] = useState< 'fruit category' | 'Decorative Flowers' | 'Flowering Plants' | 'Decorative Plants' | 'Indoor Plants' | 'Vegetable Plants'>('Flowering Plants');
   const [image, setImage] = useState('');
   const [price, setPrice] = useState<number>(150);
   const [size, setSize] = useState('8 inch nursery pot');
@@ -120,9 +120,9 @@ export default function AdminPanel({
       category,
       image,
       price,
-      size: size.trim() || undefined,
-      sunlight: sunlight.trim() || undefined,
-      water: water.trim() || undefined,
+      transportation:
+      
+     
       isFeatured
     };
 
@@ -199,7 +199,7 @@ export default function AdminPanel({
       >
         
         {/* Console Header Bar */}
-        <div className="bg-gradient-to-r from-forest-700 to-forest-600 px-6 py-4 text-white flex items-center justify-between shadow-xs shrink-0">
+        <div className="bg-gradient from-forest-700 to-forest-600 px-6 py-4 text-white flex items-center justify-between shadow-xs shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🛡️</span>
             <div>
@@ -392,7 +392,9 @@ export default function AdminPanel({
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
                     className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-hidden focus:border-forest-500 focus:bg-white"
-                  >
+                  > 
+                    <option value="fruit category">fruit category</option>
+                    <option value="Decorative Flowers">Decorative Flowers</option>
                     <option value="Flowering Plants">Flowering Plants</option>
                     <option value="Decorative Plants">Decorative Plants</option>
                     <option value="Indoor Plants">Indoor Plants</option>
@@ -415,6 +417,7 @@ export default function AdminPanel({
                     placeholder="e.g. 150"
                   />
                 </div>
+                
 
 
                 {/* Toggle Featured */}

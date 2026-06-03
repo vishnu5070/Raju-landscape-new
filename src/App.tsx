@@ -5,7 +5,6 @@ import PlantCard from './components/PlantCard';
 import PlantModal from './components/PlantModal';
 import OrderWishlist from './components/OrderWishlist';
 import Footer from './components/Footer';
-import { PLANTS } from './data/plants';
 import { Plant, CartItem } from './types';
 import { Star, Leaf, Sparkles, MessageSquare, RefreshCcw, Search } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -51,6 +50,7 @@ export default function App() {
 
   // Load catalog plants dynamically from backend database
   const [catalogPlants, setCatalogPlants] = useState<Plant[]>([]);
+  const [catalogError, setCatalogError] = useState<string>('');
 
   useEffect(() => {
     fetch('http://localhost:5000/api/plants')
@@ -59,21 +59,17 @@ export default function App() {
         return res.json();
       })
       .then(data => {
-        if (data && data.length > 0) {
-          setCatalogPlants(data);
-        } else {
-          // If the DB is empty, default to the local static PLANTS data list as initial seed
-          setCatalogPlants(PLANTS);
-        }
+        setCatalogPlants(Array.isArray(data) ? data : []);
+        setCatalogError('');
       })
       .catch(err => {
         console.error('Error fetching plants from backend:', err);
-        // Fallback to static list if backend is not reachable or fails
-        setCatalogPlants(PLANTS);
+        setCatalogPlants([]);
+        setCatalogError('Unable to load plants from the backend catalog.');
       });
   }, []);
 
-  const categories = ['All Plants', 'Flowering Plants', 'Decorative Plants', 'Indoor Plants', 'Vegetable Plants'];
+  const categories = ['All Plants', 'fruit category','Decorative Flowers','Flowering Plants', 'Decorative Plants', 'Indoor Plants', 'Vegetable Plants'];
 
   // Persistent shopping cart / wishlist
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -279,7 +275,9 @@ export default function App() {
               </div>
               <h3 className="text-lg font-bold font-display text-forest-900 mb-1">No plant varieties found</h3>
               <p className="text-sm text-gray-500 mb-6">
-                We couldn't locate anything matching "{searchQuery}". Check spelling or change your category filter filters.
+                {catalogError || (searchQuery
+                  ? `We couldn't locate anything matching "${searchQuery}". Check spelling or change your category filter.`
+                  : 'The nursery catalog is currently empty. Add plants from the admin portal to display them here.')}
               </p>
               <button
                 onClick={() => {
